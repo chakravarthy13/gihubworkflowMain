@@ -1,0 +1,39 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile Java Files",
+            "type": "shell",
+            "command": "javac",
+            "args": [
+                "Sum.java",
+                "SumMain.java"
+            ],
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Run Sum Program",
+            "type": "shell",
+            "command": "java",
+            "args": [
+                "SumMain",
+                "5",
+                "10"
+            ],
+            "dependsOn": "Compile Java Files",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}
