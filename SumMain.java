@@ -6,11 +6,11 @@ public class SumMain {
         int result = Sum.calculateSum(numberA, numberB);
         
         // Display the result
-        System.out.println("Sum of " + numberA + " and " + numberB + " is: " + result);
+        System.out.println(" Sum of " + numberA + " and " + numberB + " is: " + result);
     }
     
     public static void main(String[] args) {
         // Call performSum method with two numbers
-        performSum(25, 10);
+        performSum(7, 10);
     }
 }
