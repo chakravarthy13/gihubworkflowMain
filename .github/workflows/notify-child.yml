@@ -1,0 +1,28 @@
+name: Notify child repos on push
+
+on:
+  push:
+    branches: [ MainBranch01 ]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch to child repos (simple loop)
+        env:
+          CHILD_REPOS: ${{chakravarthy13/gihubworkflowChild}} # comma-separated owner/repo list
+          PAT: ${{ secrets.CHILD_REPO_PAT }} #Parent Repo secret with access to child repos
+        run: |
+          if [ -z "$CHILD_REPOS" ] || [ -z "$PAT" ]; then
+            echo "Set secrets CHILD_REPOS (comma-separated) and CHILD_REPO_PAT"
+            exit 1
+          fi
+          IFS=','; for repo in $CHILD_REPOS; do
+            repo=$(echo $repo | xargs)
+            echo "Dispatching to $repo"
+            curl -s -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token $PAT" \
+              "https://api.github.com/repos/$repo/dispatches" \
+              -d "{\"event_type\":\"submodule-updated\",\"client_payload\":{\"sha\":\"${{ github.sha }}\"}}"
+          done
